@@ -77,6 +77,10 @@ def emitter_converter(size_par, data):
 
     >>> emitter_converter(4, "101010111111")
     ['1', '1', '1', '1', '0', '1', '0', '0', '1', '0', '1', '1', '1', '1', '1', '1']
+    >>> emitter_converter(5, "101010111111")
+    Traceback (most recent call last):
+        ...
+    ValueError: size of parity don't match with size of data
     """
     if size_par + len(data) <= 2**size_par - (len(data) - 1):
         raise ValueError("size of parity don't match with size of data")
@@ -135,7 +139,7 @@ def emitter_converter(size_par, data):
 
     # Mount the message
     cont_bp = 0  # parity bit counter
-    for x in range(0, size_par + len(data)):
+    for x in range(size_par + len(data)):
         if data_ord[x] is None:
             data_out.append(str(parity[cont_bp]))
             cont_bp += 1
@@ -228,7 +232,7 @@ def receptor_converter(size_par, data):
 
     # Mount the message
     cont_bp = 0  # Parity bit counter
-    for x in range(0, size_par + len(data_output)):
+    for x in range(size_par + len(data_output)):
         if data_ord[x] is None:
             data_out.append(str(parity[cont_bp]))
             cont_bp += 1
